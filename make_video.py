@@ -385,7 +385,7 @@ def draw_sparkles(c, rnd, n=40):
         c.polygon(star_points(x, y, 14, 3, 4, 0), fill=(255, 255, 255, 170))
 
 
-def draw_wrapped(c, text, cy, size, max_w=920, fill="white"):
+def draw_wrapped(c, text, cy, size, max_w=920, fill="white", stroke=3):
     """Testo centrato, a capo automatico, con ombra."""
     f = font(size)
     words, lines, cur = text.split(), [], ""
@@ -402,9 +402,10 @@ def draw_wrapped(c, text, cy, size, max_w=920, fill="white"):
     for k, ln in enumerate(lines):
         tw = c.d.textlength(ln, font=f) / S
         x, y = (W - tw) / 2, y0 + k * lh
-        c.d.text(((x + 5) * S, (y + 6) * S), ln, font=f, fill=(0, 0, 0, 140))
+        if stroke:
+            c.d.text(((x + 5) * S, (y + 6) * S), ln, font=f, fill=(0, 0, 0, 140))
         c.d.text((x * S, y * S), ln, font=f, fill=fill,
-                 stroke_width=int(3 * S), stroke_fill=(0, 0, 0, 200))
+                 stroke_width=int(stroke * S), stroke_fill=(0, 0, 0, 200))
 
 
 def render_scene(sc, idx, total, path):
@@ -412,13 +413,18 @@ def render_scene(sc, idx, total, path):
     img = gradient(c1, c2)
     c = Canvas(img)
     rnd = random.Random(idx * 7 + 3)
-    draw_sparkles(c, rnd)
+    storia = sc.get("style") == "storia"
+    if storia:
+        draw_dust(c, rnd)
+    else:
+        draw_sparkles(c, rnd)
 
-    # alone luminoso dietro l'icona
+    # alone luminoso dietro l'icona (caldo e più tenue nello stile "storia")
     glow = Image.new("RGBA", img.size, (0, 0, 0, 0))
     gd = ImageDraw.Draw(glow)
     cx, cy, r = 540 * S, ICON_Y * S, 330 * S
-    gd.ellipse((cx - r, cy - r, cx + r, cy + r), fill=mix(c2, (255, 255, 255), 0.35) + (110,))
+    halo = mix(c2, (255, 214, 150), 0.30) + (80,) if storia else mix(c2, (255, 255, 255), 0.35) + (110,)
+    gd.ellipse((cx - r, cy - r, cx + r, cy + r), fill=halo)
     glow = glow.filter(ImageFilter.GaussianBlur(70 * S))
     img.paste(glow, (0, 0), glow)
     c = Canvas(img)
@@ -435,7 +441,40 @@ def render_scene(sc, idx, total, path):
         col = (255, 255, 255, 230) if k <= idx else (255, 255, 255, 70)
         c.rrect((x0 + 4, 1780, x0 + seg - 4, 1792), 6, fill=col)
 
+    if storia:
+        img = film_look(img, idx)
     img.convert("RGB").save(path)
+
+
+def draw_dust(c, rnd, n=70):
+    """Pulviscolo e graffi da pellicola d'archivio (al posto delle stelle)."""
+    for _ in range(n):
+        x, y = rnd.uniform(0, W), rnd.uniform(0, H)
+        r = rnd.choice([1, 1.5, 2, 2.5, 3.5])
+        c.circle(x, y, r, fill=(255, 235, 200, rnd.randint(25, 90)))
+    for _ in range(3):
+        x = rnd.uniform(80, W - 80)
+        y0 = rnd.uniform(0, H * 0.6)
+        c.line([(x, y0), (x + rnd.uniform(-6, 6), y0 + rnd.uniform(200, 700))],
+               fill=(255, 240, 210, rnd.randint(18, 40)), width=1.5)
+
+
+def film_look(img, seed):
+    """Grana di pellicola + leggera dominante seppia + vignettatura più marcata."""
+    import numpy as np
+    a = np.asarray(img.convert("RGB")).astype(np.float32)
+    lum = a.mean(axis=2, keepdims=True)
+    sep = np.concatenate([lum * 1.07, lum * 0.95, lum * 0.80], axis=2)
+    a = a * 0.72 + sep * 0.28                                   # seppia leggera, i colori restano
+    rng = np.random.default_rng(seed + 11)
+    small = rng.normal(0, 1, (a.shape[0] // 2, a.shape[1] // 2, 1)).astype(np.float32)
+    grain = np.repeat(np.repeat(small, 2, axis=0), 2, axis=1)[: a.shape[0], : a.shape[1]]
+    a += grain * 9
+    hgt, wid = a.shape[:2]
+    yy, xx = np.ogrid[:hgt, :wid]
+    d = ((xx / wid - 0.5) ** 2 * 2.0 + (yy / hgt - 0.45) ** 2 * 1.3)
+    a *= np.clip(1 - 0.55 * d, 0.45, 1)[..., None]
+    return Image.fromarray(np.clip(a, 0, 255).astype(np.uint8))
 
 
 # ----------------------------------------------------------------------------- icone
@@ -629,7 +668,157 @@ def icon_dna(c, x, y, s):
         c.circle(x + dx, yy, 26, fill=(255, 110, 150, 255))
 
 
+# ----------------------------------------------------------------------------- icone "storia"
+PAPER = (236, 222, 192, 255)
+SEPIA = (120, 84, 50, 255)
+BURG = (122, 24, 34, 255)
+SHADOW = (0, 0, 0, 110)
+
+
+def icon_man(c, x, y, s):
+    """Silhouette d'epoca: uomo con cappello e cappotto, visto di tre quarti, in controluce."""
+    col = (24, 16, 12, 255)
+    c.circle(x, y + 40, 300, fill=(255, 220, 160, 70))
+    c.polygon([(x - 230, y + 340), (x - 190, y + 60), (x - 90, y - 10), (x + 90, y - 10),
+               (x + 190, y + 60), (x + 230, y + 340)], fill=col)                     # cappotto
+    c.polygon([(x - 60, y - 10), (x, y + 140), (x + 60, y - 10)], fill=(200, 190, 170, 255))  # camicia
+    c.polygon([(x - 18, y + 5), (x, y + 120), (x + 18, y + 5)], fill=BURG)          # cravatta
+    c.circle(x, y - 110, 95, fill=col)                                               # testa
+    c.ellipse((x - 175, y - 205, x + 175, y - 160), fill=col)                        # tesa
+    c.rrect((x - 105, y - 300, x + 105, y - 175), 40, fill=col)                      # cupola
+    c.rrect((x - 105, y - 215, x + 105, y - 188), 6, fill=(90, 60, 40, 255))         # nastro
+
+
+def icon_city(c, x, y, s):
+    """Budapest di notte: Parlamento con cupola e guglie sul Danubio, luna."""
+    c.circle(x + 230, y - 230, 110, fill=(250, 238, 200, 50))
+    c.circle(x + 230, y - 230, 70, fill=(250, 238, 200, 255))
+    col = (20, 14, 12, 255)
+    base = y + 170
+    c.d.rectangle(((x - 380) * S, (base - 90) * S, (x + 380) * S, base * S), fill=col)
+    c.d.rectangle(((x - 120) * S, (base - 200) * S, (x + 120) * S, base * S), fill=col)
+    c.d.chord(((x - 110) * S, (base - 330) * S, (x + 110) * S, (base - 110) * S), 180, 360, fill=col)
+    c.polygon([(x - 14, base - 320), (x, base - 420), (x + 14, base - 320)], fill=col)
+    for dx in (-330, -250, -170, 170, 250, 330):
+        c.polygon([(x + dx - 18, base - 90), (x + dx, base - 200), (x + dx + 18, base - 90)], fill=col)
+    for k in range(-7, 8):                                                           # finestre accese
+        if k % 3:
+            c.d.rectangle(((x + k * 50 - 8) * S, (base - 60) * S, (x + k * 50 + 8) * S, (base - 30) * S),
+                          fill=(255, 200, 110, 200))
+    for k in range(5):                                                               # riflessi sul fiume
+        yy = base + 40 + k * 32
+        c.line([(x - 300 + k * 30, yy), (x + 300 - k * 30, yy)], fill=(255, 210, 140, 90 - k * 15), width=6)
+
+
+def icon_passport(c, x, y, s):
+    c.rrect((x - 190 + 18, y - 270 + 22, x + 190 + 18, y + 270 + 22), 26, fill=SHADOW)
+    c.rrect((x - 190, y - 270, x + 190, y + 270), 26, fill=BURG, outline=(200, 160, 90, 255), width=6)
+    c.rrect((x - 160, y - 240, x + 160, y + 240), 16, outline=(220, 180, 100, 200), width=3)
+    draw_wrapped(c, "ESPAÑA", y - 170, 52, fill=(235, 200, 120), stroke=0)
+    c.circle(x, y + 10, 85, outline=(235, 200, 120, 255), width=10)                # stemma
+    c.polygon([(x - 45, y - 30), (x + 45, y - 30), (x + 45, y + 30), (x, y + 70), (x - 45, y + 30)],
+              fill=(235, 200, 120, 255))
+    draw_wrapped(c, "PASAPORTE", y + 175, 40, fill=(235, 200, 120), stroke=0)
+
+
+def icon_house(c, x, y, s):
+    c.polygon([(x - 260, y - 20), (x, y - 260), (x + 260, y - 20)], fill=(70, 40, 30, 255))
+    c.rrect((x - 220, y - 30, x + 220, y + 280), 6, fill=PAPER)
+    for wx in (-130, 130):
+        c.rrect((x + wx - 55, y + 30, x + wx + 55, y + 130), 6, fill=(255, 205, 110, 255))
+    c.rrect((x - 55, y + 140, x + 55, y + 280), 6, fill=(90, 55, 35, 255))
+    # bandiera di Spagna sul tetto
+    c.line([(x + 150, y - 140), (x + 150, y - 340)], fill=(60, 40, 30, 255), width=10)
+    c.d.rectangle(((x + 155) * S, (y - 340) * S, (x + 330) * S, (y - 225) * S), fill=(198, 11, 30, 255))
+    c.d.rectangle(((x + 155) * S, (y - 311) * S, (x + 330) * S, (y - 254) * S), fill=(255, 196, 0, 255))
+    c.rrect((x - 300, y + 300, x + 300, y + 370), 20, fill=(20, 60, 30, 230))
+    draw_wrapped(c, "CASA PROTETTA", y + 334, 40)
+
+
+def icon_alert(c, x, y, s):
+    c.polygon([(x, y - 280), (x + 300, y + 240), (x - 300, y + 240)], fill=(230, 60, 40, 255),
+              outline=PAPER, width=14)
+    c.rrect((x - 26, y - 130, x + 26, y + 90), 20, fill=PAPER)
+    c.circle(x, y + 160, 32, fill=PAPER)
+
+
+def icon_stamp(c, x, y, s):
+    """Documento ufficiale con timbro e firma."""
+    c.rrect((x - 230 + 16, y - 300 + 20, x + 230 + 16, y + 300 + 20), 10, fill=SHADOW)
+    c.rrect((x - 230, y - 300, x + 230, y + 300), 10, fill=PAPER)
+    draw_wrapped(c, "LEGACIÓN DE ESPAÑA", y - 240, 30, fill=(60, 40, 30), stroke=0)
+    for k in range(6):
+        yy = y - 170 + k * 48
+        c.line([(x - 180, yy), (x + (180 if k % 3 else 90), yy)], fill=(150, 125, 95, 255), width=7)
+    c.line([(x - 200, y + 215), (x - 165, y + 170), (x - 140, y + 225), (x - 110, y + 175),
+            (x - 85, y + 215)], fill=(30, 30, 80, 255), width=6)                    # firma
+    c.circle(x + 20, y + 170, 105, outline=(170, 30, 40, 230), width=12)            # timbro
+    c.circle(x + 20, y + 170, 75, outline=(170, 30, 40, 200), width=5)
+    c.d.text(((x + 20) * S, (y + 170) * S), "CÓNSUL", font=font(30), fill=(170, 30, 40, 255), anchor="mm")
+
+
+def icon_train(c, x, y, s):
+    col = (34, 24, 20, 255)
+    c.line([(x - 400, y + 230), (x + 400, y + 230)], fill=(120, 100, 80, 255), width=12)
+    for k in range(-8, 9):
+        c.line([(x + k * 50, y + 222), (x + k * 50 - 14, y + 250)], fill=(90, 70, 55, 255), width=8)
+    c.rrect((x - 330, y - 150, x + 330, y + 170), 14, fill=col)                     # vagone merci
+    c.rrect((x - 360, y - 175, x + 360, y - 135), 10, fill=col)
+    for k in range(-5, 6):
+        c.line([(x + k * 55, y - 130), (x + k * 55, y + 160)], fill=(60, 45, 38, 255), width=5)
+    c.rrect((x - 90, y - 110, x + 90, y + 150), 6, fill=(255, 210, 130, 255))      # porta aperta
+    c.circle(x, y - 10, 30, fill=col)                                                # persona che scende
+    c.rrect((x - 34, y + 25, x + 34, y + 150), 16, fill=col)
+    for wx in (-230, 230):
+        c.circle(x + wx, y + 205, 40, fill=(70, 55, 45, 255), outline=(150, 130, 100, 255), width=6)
+
+
+def icon_crowd(c, x, y, s):
+    rnd = random.Random(4)
+    for row in range(5):
+        n = 9 - row
+        for k in range(n):
+            px = x - (n - 1) * 42 + k * 84 + rnd.uniform(-8, 8)
+            py = y + 250 - row * 85
+            a = 255 - row * 30
+            c.circle(px, py - 38, 22, fill=(245, 230, 205, a))
+            c.rrect((px - 28, py - 12, px + 28, py + 50), 22, fill=(245, 230, 205, a))
+    draw_wrapped(c, "5.000+", y - 220, 150, fill=(255, 205, 90))
+
+
+def icon_letter(c, x, y, s):
+    """Busta chiusa con sigillo di ceralacca: il segreto custodito."""
+    c.rrect((x - 300 + 16, y - 190 + 20, x + 300 + 16, y + 190 + 20), 12, fill=SHADOW)
+    c.rrect((x - 300, y - 190, x + 300, y + 190), 12, fill=PAPER)
+    c.polygon([(x - 300, y - 185), (x, y + 40), (x + 300, y - 185)], fill=(220, 200, 165, 255))
+    c.line([(x - 300, y - 185), (x, y + 40), (x + 300, y - 185)], fill=(175, 150, 115, 255), width=5)
+    c.circle(x, y + 30, 70, fill=BURG)
+    c.circle(x, y + 30, 48, outline=(170, 50, 55, 255), width=6)
+    draw_wrapped(c, "P", y + 26, 56, fill=(230, 170, 160), stroke=0)
+
+
+def icon_medal(c, x, y, s):
+    c.polygon([(x - 120, y - 300), (x - 30, y - 300), (x + 60, y - 40), (x - 30, y - 40)],
+              fill=(30, 80, 160, 255))
+    c.polygon([(x + 120, y - 300), (x + 30, y - 300), (x - 60, y - 40), (x + 30, y - 40)],
+              fill=(240, 240, 245, 255))
+    c.circle(x, y + 110, 190, fill=GOLD, outline=(255, 240, 180, 255), width=10)
+    c.circle(x, y + 110, 150, outline=(200, 150, 20, 255), width=6)
+    draw_wrapped(c, "GIUSTO", y + 80, 46, fill=(110, 70, 10), stroke=0)
+    draw_wrapped(c, "TRA LE NAZIONI", y + 140, 26, fill=(110, 70, 10), stroke=0)
+
+
+def icon_quote(c, x, y, s):
+    for dx in (-110, 110):
+        c.circle(x + dx, y - 40, 95, fill=PAPER)
+        c.polygon([(x + dx - 20, y + 20), (x + dx + 90, y - 10), (x + dx - 90, y + 190)], fill=PAPER)
+    c.line([(x - 260, y + 270), (x + 260, y + 270)], fill=(255, 205, 90, 255), width=8)
+
+
 ICONS = {
+    "man": icon_man, "city": icon_city, "passport": icon_passport, "house": icon_house,
+    "alert": icon_alert, "stamp": icon_stamp, "train": icon_train, "crowd": icon_crowd,
+    "letter": icon_letter, "medal": icon_medal, "quote": icon_quote,
     "star": icon_star, "spoon_star": icon_spoon_star, "explosion": icon_explosion,
     "sun_squeeze": icon_sun_squeeze, "atom": icon_atom, "spin": icon_spin, "fall": icon_fall,
     "collision": icon_collision, "ring": icon_ring, "bell": icon_bell, "bulb": icon_bulb,
@@ -774,6 +963,48 @@ def synth_music(total, path, sr=48000):
     write_wav(path, out * 0.5, sr)
 
 
+def synth_music_storia(total, path, sr=48000):
+    """Tappeto cupo e cinematografico per le storie: accordi minori gravi, archi morbidi,
+    pulsazione lenta tipo battito e un pianoforte rado. Nessun file esterno."""
+    import numpy as np
+    t = np.arange(int(total * sr)) / sr
+    # La minore - Fa - Re minore - Mi (cadenza "drammatica")
+    chords = [(55.0, 110.0, 130.81, 164.81), (43.65, 87.31, 130.81, 174.61),
+              (36.71, 73.42, 146.83, 174.61), (41.2, 82.41, 123.47, 207.65)]
+    out = np.zeros((len(t), 2))
+    seg = 5.0
+    for k in range(int(total / seg) + 2):
+        st = k * seg - 1.2
+        env = np.clip((t - st) / 2.0, 0, 1) * np.clip((st + seg + 2.4 - t) / 2.0, 0, 1)
+        if not env.any():
+            continue
+        for j, fq in enumerate(chords[k % len(chords)]):
+            for det, side in ((0.997, 0), (1.003, 1)):
+                ph = 2 * np.pi * fq * det * t + j
+                tone = np.sin(ph) + 0.25 * np.sin(2 * ph) + 0.1 * np.sin(3 * ph)   # timbro "archi"
+                out[:, side] += env * tone * (0.55 if j < 2 else 0.28)
+    # battito: due colpi gravi ogni 1,6 s
+    for b in np.arange(0.8, total, 1.6):
+        for off, g in ((0, 1.0), (0.22, 0.6)):
+            st = b + off
+            e = np.exp(-np.clip(t - st, 0, None) * 9) * (t >= st)
+            kick = g * 0.9 * e * np.sin(2 * np.pi * 48 * (t - st))
+            out[:, 0] += kick
+            out[:, 1] += kick
+    # pianoforte: note rade della scala di La minore
+    rng = np.random.default_rng(7)
+    notes = [440.0, 523.25, 587.33, 659.25, 783.99]
+    for st in np.arange(2.0, total, 2.5):
+        fq = rng.choice(notes)
+        e = np.exp(-np.clip(t - st, 0, None) * 1.8) * (t >= st)
+        tone = 0.14 * e * (np.sin(2 * np.pi * fq * t) + 0.3 * np.sin(4 * np.pi * fq * t))
+        pan = rng.uniform(0.3, 0.7)
+        out[:, 0] += tone * (1 - pan)
+        out[:, 1] += tone * pan
+    out /= np.max(np.abs(out)) + 1e-9
+    write_wav(path, out * 0.5, sr)
+
+
 def synth_whooshes(offsets, total, path, sr=48000):
     """Effetto "whoosh" (rumore filtrato con sweep) centrato su ogni transizione."""
     import numpy as np
@@ -830,6 +1061,8 @@ def assemble(clips, voices, audio, subs, out_path, work, topic):
         mpath = work / "music.wav"
         if topic["music"] == "synth":
             synth_music(total, mpath)
+        elif topic["music"] == "synth_storia":
+            synth_music_storia(total, mpath)
         else:
             shutil.copy(ROOT / topic["music"], mpath)
         cmd += ["-stream_loop", "-1", "-i", mpath.name]
@@ -929,6 +1162,8 @@ def main():
     for sc in scenes:                            # opzioni globali che valgono per ogni scena
         sc.setdefault("progress", bool(topic.get("progress_bar", True)))
         sc.setdefault("punch", bool(topic.get("punch", False)))
+        if topic.get("style"):
+            sc.setdefault("style", topic["style"])
     outdir = Path(a.outdir)
     outdir.mkdir(parents=True, exist_ok=True)
     work = outdir / f".work_{a.name}"

@@ -1,0 +1,146 @@
+{
+  "title": "Salvò 5.000 persone fingendosi console. Poi tacque per 40 anni #shorts",
+  "description": "Budapest, inverno 1944. Giorgio Perlasca, un commerciante italiano, si finge console di Spagna e per 45 giorni inganna i nazisti ungheresi: con documenti, timbri e case protette salva oltre 5.000 ebrei.\n\nPoi torna in Italia e per più di quarant'anni non ne parla quasi con nessuno. La sua storia viene fuori solo nel 1987, quando alcune donne che aveva salvato da bambine lo ritrovano. Nel 1989 Israele lo riconosce Giusto tra le Nazioni.\n\nTu cosa avresti fatto al suo posto? Scrivilo nei commenti 👇\n\n🔔 Iscriviti a La Storia Nascosta: ogni giorno una storia vera che nessuno ti ha mai raccontato.\n\n#storia #storianascosta #perlasca #secondaguerramondiale #shorts",
+  "tags": [
+    "giorgio perlasca",
+    "storia",
+    "storia nascosta",
+    "seconda guerra mondiale",
+    "giusti tra le nazioni",
+    "budapest 1944",
+    "storie vere",
+    "eroi italiani",
+    "olocausto",
+    "shorts italiano"
+  ],
+  "style": "storia",
+  "engine": "kokoro",
+  "kokoro_voice": "im_nicola",
+  "voice": "it-IT-DiegoNeural",
+  "rate": "-3%",
+  "voice_polish": true,
+  "pause": 0.28,
+  "music": "synth_storia",
+  "music_db": -21,
+  "whoosh": true,
+  "whoosh_db": -16,
+  "punch": true,
+  "transitions": [
+    "fadeblack",
+    "dissolve",
+    "smoothup",
+    "fade",
+    "circleopen",
+    "dissolve"
+  ],
+  "scenes": [
+    {
+      "text": "Quest'uomo salvò cinquemila persone con una bugia. Poi lo tenne segreto per quarant'anni.",
+      "headline": "SALVÒ 5.000 VITE CON UNA BUGIA",
+      "icon": "crowd",
+      "colors": [
+        "#1a0f08",
+        "#5a3a1c"
+      ]
+    },
+    {
+      "text": "Lui è Giorgio Perlasca, italiano. Nel 1944 si trova a Budapest per lavoro.",
+      "headline": "GIORGIO PERLASCA",
+      "icon": "man",
+      "colors": [
+        "#120c08",
+        "#6b4a2a"
+      ]
+    },
+    {
+      "text": "In Ungheria prendono il potere i nazisti ungheresi. Inizia la caccia agli ebrei.",
+      "headline": "BUDAPEST, 1944",
+      "icon": "city",
+      "colors": [
+        "#0a0d16",
+        "#2c3550"
+      ]
+    },
+    {
+      "text": "Perlasca ha combattuto in Spagna, e l'ambasciata spagnola lo protegge.",
+      "headline": "PROTETTO DALLA SPAGNA",
+      "icon": "passport",
+      "colors": [
+        "#1c0a0a",
+        "#5c2020"
+      ]
+    },
+    {
+      "text": "L'ambasciata protegge migliaia di ebrei. Ma a fine novembre il diplomatico spagnolo se ne va.",
+      "headline": "CASE PROTETTE, ABBANDONATE",
+      "icon": "house",
+      "colors": [
+        "#1a0606",
+        "#4a1010"
+      ]
+    },
+    {
+      "text": "Così Perlasca fa una cosa folle: si nomina da solo console di Spagna.",
+      "headline": "IL FINTO CONSOLE",
+      "icon": "stamp",
+      "colors": [
+        "#140d07",
+        "#6a4826"
+      ]
+    },
+    {
+      "text": "Per quarantacinque giorni firma documenti, inganna i nazisti, fa scendere persone dai treni.",
+      "headline": "45 GIORNI",
+      "icon": "train",
+      "colors": [
+        "#0c0c0e",
+        "#3a3530"
+      ]
+    },
+    {
+      "text": "Alla fine ne salva più di cinquemila.",
+      "headline": "OLTRE 5.000 VITE",
+      "icon": "crowd",
+      "colors": [
+        "#1a1206",
+        "#7a5418"
+      ]
+    },
+    {
+      "text": "Poi torna in Italia. E per quarant'anni non ne parla quasi con nessuno.",
+      "headline": "IL SILENZIO",
+      "icon": "letter",
+      "colors": [
+        "#100c0a",
+        "#3e2e22"
+      ]
+    },
+    {
+      "text": "Nel 1987 alcune donne che aveva salvato da bambine lo ritrovano.",
+      "headline": "1987: LO RITROVANO",
+      "icon": "medal",
+      "colors": [
+        "#0e1220",
+        "#2e3a5c"
+      ]
+    },
+    {
+      "text": "Gli chiedono perché l'ha fatto. Risponde: «Lei, cosa avrebbe fatto al mio posto?»",
+      "headline": "«E TU, COSA AVRESTI FATTO?»",
+      "icon": "quote",
+      "colors": [
+        "#120a06",
+        "#5a3414"
+      ]
+    },
+    {
+      "text": "Seguimi per altre storie nascoste come questa.",
+      "headline": "LA STORIA NASCOSTA",
+      "icon": "bell",
+      "colors": [
+        "#140a06",
+        "#6a2a14"
+      ]
+    }
+  ]
+}
