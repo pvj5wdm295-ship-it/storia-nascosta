@@ -1,0 +1,29 @@
+{
+  "title": "Un cucchiaino di questa stella pesa più dell'umanità intera 🤯 #shorts",
+  "description": "Le stelle di neutroni sono gli oggetti più densi che possiamo osservare: un cucchiaino del loro materiale pesa miliardi di tonnellate, ruotano centinaia di volte al secondo e, quando si scontrano, producono l'oro che portiamo al dito.\n\nIn 45 secondi: cosa sono, come nascono da una supernova e perché la loro gravità è così estrema.\n\n🔔 Iscriviti per una nuova curiosità scientifica ogni giorno!\n\n#scienza #spazio #astronomia #curiosità #shorts",
+  "tags": ["stelle di neutroni", "scienza", "spazio", "astronomia", "universo", "supernova", "curiosità scientifiche", "astrofisica", "oro nello spazio", "shorts italiano"],
+  "voice": "it-IT-DiegoNeural",
+  "rate": "+0%",
+  "scenes": [
+    {"text": "Un cucchiaino di questa stella pesa più di tutti gli esseri umani messi insieme.",
+     "headline": "1 CUCCHIAINO = MILIARDI DI TONNELLATE", "icon": "spoon_star", "colors": ["#1a0b3d", "#6a1b9a"]},
+    {"text": "Si chiama stella di neutroni, ed è ciò che resta di una stella gigante.",
+     "headline": "STELLA DI NEUTRONI", "icon": "star", "colors": ["#0d1b4c", "#1565c0"]},
+    {"text": "Quando una stella enorme esplode in supernova, il suo nucleo collassa su se stesso.",
+     "headline": "SUPERNOVA!", "icon": "explosion", "colors": ["#3e0a0a", "#e65100"]},
+    {"text": "Più massa del nostro Sole viene schiacciata in una sfera di appena venti chilometri.",
+     "headline": "IL SOLE IN 20 KM", "icon": "sun_squeeze", "colors": ["#4a1500", "#f9a825"]},
+    {"text": "La pressione è così forte che protoni ed elettroni si fondono in neutroni.",
+     "headline": "p⁺ + e⁻ → n", "icon": "atom", "colors": ["#003c3c", "#00897b"]},
+    {"text": "Alcune ruotano su se stesse più di settecento volte al secondo.",
+     "headline": "700 GIRI AL SECONDO", "icon": "spin", "colors": ["#0b2545", "#13a8c9"]},
+    {"text": "Cadere da un solo metro ti farebbe schiantare a sette milioni di chilometri orari.",
+     "headline": "1 METRO DI CADUTA", "icon": "fall", "colors": ["#2b0036", "#c2185b"]},
+    {"text": "E quando due stelle di neutroni si scontrano, creano oro e platino.",
+     "headline": "SCONTRO COSMICO", "icon": "collision", "colors": ["#1b1b3a", "#5e35b1"]},
+    {"text": "Quindi l'oro che porti al dito potrebbe essere nato da uno scontro tra stelle.",
+     "headline": "IL TUO ORO VIENE DALLO SPAZIO", "icon": "ring", "colors": ["#3b2a00", "#c79100"]},
+    {"text": "Seguimi per scoprire ogni giorno un nuovo segreto dell'universo!",
+     "headline": "SEGUIMI!", "icon": "bell", "colors": ["#10002b", "#7b2cbf"]}
+  ]
+}

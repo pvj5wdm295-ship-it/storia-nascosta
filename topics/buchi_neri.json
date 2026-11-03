@@ -1,0 +1,118 @@
+{
+  "title": "Cosa succede se cadi in un buco nero? 🕳️🍝",
+  "description": "Se cadessi in un buco nero verresti stirato come uno spaghetto: si chiama spaghettificazione. 🍝\n\nIn meno di un minuto: perché nemmeno la luce può sfuggire, cos'è l'orizzonte degli eventi, perché il tempo rallenta, il buco nero gigante al centro della Via Lattea, la prima foto del 2019 e l'evaporazione prevista da Stephen Hawking.\n\n🔔 Iscriviti a Scienza in Tasca per una nuova curiosità scientifica ogni settimana!\n\n📚 Fonti: NASA, ESA, Event Horizon Telescope (M87*, 2019; Sagittarius A*, 2022), S. Hawking (1974)\n\n#scienza #spazio #buchineri #astronomia #shorts",
+  "tags": [
+    "buchi neri",
+    "buco nero",
+    "spaghettificazione",
+    "orizzonte degli eventi",
+    "scienza",
+    "spazio",
+    "astronomia",
+    "Stephen Hawking",
+    "curiosità scientifiche",
+    "shorts italiano"
+  ],
+  "engine": "kokoro",
+  "kokoro_voice": "im_nicola",
+  "voice": "it-IT-DiegoNeural",
+  "rate": "+0%",
+  "pause": 0.35,
+  "voice_polish": false,
+  "music": "synth",
+  "music_db": -20,
+  "whoosh": true,
+  "transitions": [
+    "circleopen",
+    "slideup",
+    "zoomin",
+    "smoothup",
+    "radial",
+    "dissolve",
+    "circleopen",
+    "slideup"
+  ],
+  "scenes": [
+    {
+      "text": "Se cadessi in un buco nero, verresti stirato come uno spaghetto.",
+      "headline": "SPAGHETTIFICAZIONE",
+      "anim": "spaghetti",
+      "colors": [
+        "#05010f",
+        "#2a0a4a"
+      ]
+    },
+    {
+      "text": "Un buco nero ha una gravità così forte che niente può sfuggirgli.",
+      "headline": "GRAVITÀ ESTREMA",
+      "anim": "accretion",
+      "colors": [
+        "#0a0205",
+        "#3d1208"
+      ]
+    },
+    {
+      "text": "Nemmeno la luce: oltre l'orizzonte degli eventi, non si torna più indietro.",
+      "headline": "NEMMENO LA LUCE",
+      "anim": "light_bend",
+      "colors": [
+        "#02030f",
+        "#14123d"
+      ]
+    },
+    {
+      "text": "Vicino al buco nero, i piedi sono tirati molto più forte della testa.",
+      "headline": "TESTA CONTRO PIEDI",
+      "anim": "stretch",
+      "colors": [
+        "#060114",
+        "#2b0a3d"
+      ]
+    },
+    {
+      "text": "E il tempo rallenta: visto da fuori, sembreresti congelarti sul bordo.",
+      "headline": "IL TEMPO RALLENTA",
+      "anim": "clocks",
+      "colors": [
+        "#020a14",
+        "#0b2a45"
+      ]
+    },
+    {
+      "text": "Al centro della nostra galassia ce n'è uno che pesa quattro milioni di Soli.",
+      "headline": "4 MILIONI DI SOLI",
+      "anim": "galaxy",
+      "colors": [
+        "#04010c",
+        "#251046"
+      ]
+    },
+    {
+      "text": "Nel duemiladiciannove abbiamo visto per la prima volta la foto di un buco nero.",
+      "headline": "LA PRIMA FOTO (2019)",
+      "anim": "first_photo",
+      "colors": [
+        "#0a0402",
+        "#3a1a06"
+      ]
+    },
+    {
+      "text": "Ma secondo Stephen Hawking, i buchi neri evaporano lentamente fino a sparire.",
+      "headline": "EVAPORANO!",
+      "anim": "hawking",
+      "colors": [
+        "#01080c",
+        "#08313d"
+      ]
+    },
+    {
+      "text": "Per uno grande come il Sole, servirebbe un numero di anni con sessantasette zeri.",
+      "headline": "IL CONTO PIÙ LUNGO",
+      "anim": "zeros",
+      "colors": [
+        "#05010f",
+        "#2a0a4a"
+      ]
+    }
+  ]
+}

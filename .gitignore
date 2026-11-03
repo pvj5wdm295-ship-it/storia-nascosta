@@ -1,0 +1,4 @@
+output/.work_*/
+__pycache__/
+voices/
+output/

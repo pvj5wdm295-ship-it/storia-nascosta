@@ -1,0 +1,125 @@
+{
+  "title": "Non hai mai toccato niente in vita tua 🤯✋ #shorts",
+  "description": "Non hai mai toccato niente in vita tua. E te lo posso dimostrare. 🤯\n\nQuando avvicini la mano a un oggetto, gli elettroni dei suoi atomi respingono i tuoi: quello che senti come \"contatto\" è una spinta elettrica. Anche adesso non sei davvero seduto, stai fluttuando sopra la sedia. ✋⚡\n\nNel video:\n⚛️ perché gli atomi non si toccano mai\n🏟️ un atomo è quasi tutto vuoto: se il nucleo fosse una formica, l'atomo sarebbe uno stadio\n🧊 senza quel vuoto, 8 miliardi di persone starebbero in una zolletta di zucchero\n⭐ il carbonio e l'ossigeno del tuo corpo sono nati dentro le stelle\n🩸 il ferro nel tuo sangue viene da stelle esplose\n\nTu ci credevi di toccare le cose? Scrivilo nei commenti 👇\n\n🔔 Iscriviti a Scienza in Tasca: una curiosità scientifica ogni settimana, in meno di un minuto.\n\n📚 Fonti: The Feynman Lectures on Physics (vol. II); CERN; NASA; Burbidge, Burbidge, Fowler e Hoyle, \"Synthesis of the Elements in Stars\" (1957).\n\n#scienza #fisica #atomi #curiosità #shorts",
+  "tags": [
+    "non hai mai toccato niente",
+    "atomi",
+    "elettroni",
+    "fisica",
+    "scienza",
+    "polvere di stelle",
+    "atomo vuoto",
+    "curiosità scientifiche",
+    "divulgazione scientifica",
+    "shorts italiano",
+    "fisica quantistica",
+    "come funziona il tatto",
+    "siamo fatti di stelle",
+    "scienza in tasca",
+    "fatti incredibili"
+  ],
+  "engine": "kokoro",
+  "kokoro_voice": "im_nicola",
+  "voice": "it-IT-DiegoNeural",
+  "rate": "+0%",
+  "pause": 0.35,
+  "voice_polish": false,
+  "music": "synth",
+  "music_db": -20,
+  "whoosh": true,
+  "transitions": [
+    "circleopen",
+    "slideup",
+    "zoomin",
+    "smoothup",
+    "radial",
+    "dissolve",
+    "circleopen",
+    "slideup"
+  ],
+  "scenes": [
+    {
+      "text": "Non hai mai toccato niente in vita tua. E te lo posso dimostrare.",
+      "headline": "NON HAI MAI TOCCATO NIENTE",
+      "anim": "touch",
+      "colors": [
+        "#04081a",
+        "#1b2a5c"
+      ]
+    },
+    {
+      "text": "Tutto è fatto di atomi, e ogni atomo è avvolto da elettroni negativi.",
+      "headline": "TUTTO È FATTO DI ATOMI",
+      "anim": "atom_cloud",
+      "colors": [
+        "#020614",
+        "#10235a"
+      ]
+    },
+    {
+      "text": "E cariche uguali si respingono: i tuoi elettroni non toccano mai quelli degli oggetti.",
+      "headline": "SI RESPINGONO",
+      "anim": "repel",
+      "colors": [
+        "#0d0410",
+        "#3d0d22"
+      ]
+    },
+    {
+      "text": "Anzi, in questo momento non sei seduto: stai fluttuando sopra la sedia.",
+      "headline": "NON SEI SEDUTO",
+      "anim": "floating",
+      "colors": [
+        "#070a14",
+        "#2a2f4a"
+      ]
+    },
+    {
+      "text": "Ma la parte assurda è un'altra: se il nucleo fosse una formica, l'atomo sarebbe uno stadio.",
+      "headline": "QUASI TUTTO VUOTO",
+      "anim": "stadium",
+      "colors": [
+        "#03100a",
+        "#0f3a26"
+      ]
+    },
+    {
+      "text": "Togli quel vuoto, e otto miliardi di persone starebbero in una zolletta di zucchero.",
+      "headline": "L'UMANITÀ IN UNA ZOLLETTA",
+      "anim": "sugar",
+      "colors": [
+        "#0a0618",
+        "#2e1a52"
+      ]
+    },
+    {
+      "text": "Ma allora, da dove vengono i tuoi atomi? Sono nati dentro le stelle.",
+      "headline": "DA DOVE VENGONO?",
+      "anim": "star_forge",
+      "colors": [
+        "#120502",
+        "#4a1a06"
+      ]
+    },
+    {
+      "text": "Il ferro nel tuo sangue è stato sparato nello spazio da una stella esplosa.",
+      "headline": "FERRO DALLE SUPERNOVE",
+      "anim": "supernova",
+      "colors": [
+        "#05030f",
+        "#2a0a2e"
+      ]
+    },
+    {
+      "text": "Sei polvere di stelle. Polvere di stelle che non ha mai toccato niente.",
+      "headline": "SEI POLVERE DI STELLE",
+      "anim": "stardust",
+      "colors": [
+        "#02020c",
+        "#1a1240"
+      ]
+    }
+  ],
+  "progress_bar": false,
+  "punch": true
+}
